@@ -1,0 +1,31 @@
+h1, h2, h3, p, span{
+  color: white !important;
+}
+
+.list-group-item {
+  color: white !important;
+  border: 0 !important;
+}
+
+table {
+  color: white !important;
+}
+
+td {
+  color: white !important;
+  background-color: transparent !important;
+}
+
+.round-outcome {
+  width: 15px;
+  height: 15px;
+}
+
+.section {
+  margin-top: 3em;
+  margin-bottom: 3em;
+}
+
+thead {
+  font-weight: bold;
+}
