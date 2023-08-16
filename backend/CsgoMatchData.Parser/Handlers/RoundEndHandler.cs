@@ -1,8 +1,9 @@
-﻿using MatchData.Parser.Handlers.Abstractions;
-using MatchData.Parser.Models.Actions;
-using MatchData.Parser.Models.Actions.Abstractions;
+﻿using CsgoMatchData.Parser.Handlers.Abstractions;
+using CsgoMatchData.Parser.Helpers;
+using CsgoMatchData.Parser.Models.Actions;
+using CsgoMatchData.Parser.Models.Actions.Abstractions;
 
-namespace MatchData.Parser.Handlers;
+namespace CsgoMatchData.Parser.Handlers;
 
 public class RoundEndHandler : ActionHandler
 {

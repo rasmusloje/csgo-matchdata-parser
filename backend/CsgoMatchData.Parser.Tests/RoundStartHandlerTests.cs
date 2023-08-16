@@ -1,7 +1,7 @@
-﻿using MatchData.Parser.Handlers;
-using MatchData.Parser.Models.Actions;
+﻿using CsgoMatchData.Parser.Handlers;
+using CsgoMatchData.Parser.Models.Actions;
 
-namespace MatchData.Parser.Tests;
+namespace CsgoMatchData.Parser.Tests;
 
 public class RoundStartHandlerTests
 {
