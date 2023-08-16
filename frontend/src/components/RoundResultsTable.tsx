@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { RoundResult } from "../types";
 
 interface RoundResultsTableProps {
@@ -36,6 +37,20 @@ function getTeamWhoWonTheRound(
   return "";
 }
 
+function renderTeamImage(round: RoundResult) {
+  return (
+    <img
+      src={getImageName(round.roundWinType)}
+      className="round-outcome"
+      title={getTeamWhoWonTheRound(
+        round.roundWinType,
+        round.teamPlayingCounterTerrorist,
+        round.teamPlayingTerrorist
+      )}
+    />
+  );
+}
+
 const RoundResultsTable = ({ rounds }: RoundResultsTableProps) => {
   return (
     <>
@@ -45,26 +60,36 @@ const RoundResultsTable = ({ rounds }: RoundResultsTableProps) => {
           <table className="table table-borderless">
             <thead>
               <tr>
-                {rounds.map((round, i) => (
-                  <td key={i}>{round.roundNumber}</td>
-                ))}
+                {rounds.map((round, i) =>
+                  i == 15 ? (
+                    <Fragment key={i}>
+                      <td key={1000}>-</td>
+                      <td key={i}>{round.roundNumber}</td>
+                    </Fragment>
+                  ) : (
+                    <td key={i}>{round.roundNumber}</td>
+                  )
+                )}
               </tr>
             </thead>
             <tbody>
               <tr>
-                {rounds.map((round, i) => (
-                  <td key={i}>
-                    <img
-                      src={getImageName(round.roundWinType)}
-                      className="round-outcome"
-                      title={getTeamWhoWonTheRound(
-                        round.roundWinType,
-                        round.teamPlayingCounterTerrorist,
-                        round.teamPlayingTerrorist
-                      )}
-                    />
-                  </td>
-                ))}
+                {rounds.map((round, i) =>
+                  i == 15 ? (
+                    <Fragment key={i}>
+                      <td key={1000}>
+                        <img
+                          src="img/people-arrows-solid.svg"
+                          className="round-outcome"
+                          title="Halftime - Switching sides"
+                        />
+                      </td>
+                      <td key={i}>{renderTeamImage(round)}</td>
+                    </Fragment>
+                  ) : (
+                    <td key={i}>{renderTeamImage(round)}</td>
+                  )
+                )}
               </tr>
             </tbody>
           </table>
