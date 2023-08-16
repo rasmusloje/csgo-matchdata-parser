@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using CsgoMatchData.Parser.Handlers.Abstractions;
+using CsgoMatchData.Parser.Helpers;
 using CsgoMatchData.Parser.Models;
 using CsgoMatchData.Parser.Models.Actions;
 using CsgoMatchData.Parser.Models.Actions.Abstractions;
@@ -18,22 +19,13 @@ public class KillHandler : ActionHandler
         var playerAndWeaponSeparationPattern = new Regex(@"\""(.*?)\""", RegexOptions.IgnoreCase);
         var playerNameAndWeaponSeparationMatches = playerAndWeaponSeparationPattern.Matches(actionText).ToList();
 
-        var killerNameString = playerNameAndWeaponSeparationMatches[0].Value;
-        var victimNameString = playerNameAndWeaponSeparationMatches[1].Value;
-        
-        var playerPattern = new Regex("[A-Za-z0-9]+", RegexOptions.IgnoreCase);
-        var killerNameMatch = playerPattern.Match(killerNameString);
-        var victimNameMatch = playerPattern.Match(victimNameString);
-        var killerNameTeamType = ParseTeamTypeFromPlayerString(killerNameString);
-        var victimNameTeamType = ParseTeamTypeFromPlayerString(victimNameString);
-
         var weaponUsedToKill = playerNameAndWeaponSeparationMatches[2].Value;
         var weaponWithoutQuotationMarks = weaponUsedToKill.Replace("\"", string.Empty);
         
         var killDistanceInUnits = CalculateKillDistanceInUnits(actionText);
 
-        var killerPlayer = new Player(killerNameMatch.Value, killerNameTeamType);
-        var victimPlayer = new Player(victimNameMatch.Value, victimNameTeamType);
+        var killerPlayer = PlayerExtractor.ParsePlayerFromActionText(playerNameAndWeaponSeparationMatches[0].Value);
+        var victimPlayer = PlayerExtractor.ParsePlayerFromActionText(playerNameAndWeaponSeparationMatches[1].Value);
         var weaponUsed = new Weapon(weaponWithoutQuotationMarks);
         var killDistance = new Distance(killDistanceInUnits);
 

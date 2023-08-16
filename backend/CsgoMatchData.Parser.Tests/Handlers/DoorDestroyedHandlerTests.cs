@@ -1,7 +1,8 @@
 ﻿using CsgoMatchData.Parser.Handlers;
+using CsgoMatchData.Parser.Models;
 using CsgoMatchData.Parser.Models.Actions;
 
-namespace CsgoMatchData.Parser.Tests;
+namespace CsgoMatchData.Parser.Tests.Handlers;
 
 public class DoorDestroyedHandlerTests
 {
@@ -19,5 +20,7 @@ public class DoorDestroyedHandlerTests
         Assert.IsType<DoorDestroyedEvent>(result);
         var doorDestroyedEvent = (DoorDestroyedEvent)result;
         Assert.True(doorDestroyedEvent.WeaponUsed.Name == "hegrenade");
+        Assert.True(doorDestroyedEvent.DestroyedBy.TeamType == TeamType.Terrorist);
+        Assert.True(doorDestroyedEvent.DestroyedBy.Name == "Kyojin");
     }
 }

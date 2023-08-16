@@ -14,7 +14,7 @@ public class RoundStartHandler : ActionHandler
             return base.Parse(actionText);
         }
 
-        var roundStart = TimeExtractor.ParseTimestampFromActionLog(actionText);
+        var roundStart = TimeExtractor.ParseTimestampFromActionText(actionText);
 
         return new RoundStartEvent(roundStart);
     }

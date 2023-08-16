@@ -26,7 +26,7 @@ public class MatchDataParserService
         
                 while (i < filteredMatchDataSegment.Count && !filteredMatchDataSegment[i - 1].Contains("Round_End"))
                 {
-                    var timestamp = TimeExtractor.ParseTimestampFromActionLog(filteredMatchDataSegment[i]);
+                    var timestamp = TimeExtractor.ParseTimestampFromActionText(filteredMatchDataSegment[i]);
         
                     var result = handlerChain.Parse(filteredMatchDataSegment[i]);
                     if (result != null)

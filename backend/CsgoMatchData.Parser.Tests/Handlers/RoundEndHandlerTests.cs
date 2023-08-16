@@ -1,7 +1,7 @@
 ﻿using CsgoMatchData.Parser.Handlers;
 using CsgoMatchData.Parser.Models.Actions;
 
-namespace CsgoMatchData.Parser.Tests;
+namespace CsgoMatchData.Parser.Tests.Handlers;
 
 public class RoundEndHandlerTests
 {

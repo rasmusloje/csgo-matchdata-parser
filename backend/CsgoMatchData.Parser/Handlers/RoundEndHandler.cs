@@ -14,7 +14,7 @@ public class RoundEndHandler : ActionHandler
             return base.Parse(actionText);
         }
 
-        var roundEnd = TimeExtractor.ParseTimestampFromActionLog(actionText);
+        var roundEnd = TimeExtractor.ParseTimestampFromActionText(actionText);
 
         return new RoundEndEvent(roundEnd);
     }
