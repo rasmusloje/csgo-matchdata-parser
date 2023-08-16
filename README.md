@@ -3,6 +3,8 @@
 Extracts data from a srdc log of a professional CS:GO match and exposes certain parsed data via endpoints in an ASP.NET 7 API which is visualized through a React/TypeScript frontend application.
 Match file is read and parsed into sensible data upon API startup.
 
+![Frontend Screenshot](blob/frontend-screenshot.png)
+
 ## Prerequisites
 Following is required to run the applications.
 - [NodeJS TLS](https://nodejs.org/en)
