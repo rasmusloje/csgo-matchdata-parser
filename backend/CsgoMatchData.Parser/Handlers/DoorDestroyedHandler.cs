@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using CsgoMatchData.Parser.Handlers.Abstractions;
+using CsgoMatchData.Parser.Helpers;
 using CsgoMatchData.Parser.Models;
 using CsgoMatchData.Parser.Models.Actions;
 using CsgoMatchData.Parser.Models.Actions.Abstractions;
@@ -21,6 +22,8 @@ public class DoorDestroyedHandler : ActionHandler
         var match = weaponPattern.Match(lastItemInString);
         var weapon = new Weapon(match.Value);
 
-        return new DoorDestroyedEvent(weapon);
+        var player = PlayerExtractor.ParsePlayerFromActionText(actionText);
+
+        return new DoorDestroyedEvent(weapon, player);
     }
 }
