@@ -7,17 +7,20 @@ internal class ActionHandlerSetup
 {
     internal static ActionHandler SetupChain()
     {
+        var roundStartHandler = new RoundStartHandler();
         var killActionHandler = new KillHandler();
+        var roundEndHandler = new RoundEndHandler();
         var roundResultHandler = new RoundResultHandler();
         var teamPlayingCtHandler = new TeamPlayingCounterTerroristHandler();
         var teamPlayingTerroristHandler = new TeamPlayingTerroristHandler();
         
-        killActionHandler
+        roundStartHandler
             .SetNext(killActionHandler)
+            .SetNext(roundEndHandler)
             .SetNext(roundResultHandler)
             .SetNext(teamPlayingCtHandler)
             .SetNext(teamPlayingTerroristHandler);
 
-        return killActionHandler;
+        return roundStartHandler;
     }
 }
