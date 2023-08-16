@@ -13,13 +13,15 @@ internal class ActionHandlerSetup
         var roundResultHandler = new RoundResultHandler();
         var teamPlayingCtHandler = new TeamPlayingCounterTerroristHandler();
         var teamPlayingTerroristHandler = new TeamPlayingTerroristHandler();
+        var doorDestroyedHandler = new DoorDestroyedHandler();
         
         roundStartHandler
             .SetNext(killActionHandler)
             .SetNext(roundEndHandler)
             .SetNext(roundResultHandler)
             .SetNext(teamPlayingCtHandler)
-            .SetNext(teamPlayingTerroristHandler);
+            .SetNext(teamPlayingTerroristHandler)
+            .SetNext(doorDestroyedHandler);
 
         return roundStartHandler;
     }
