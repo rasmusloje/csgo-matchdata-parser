@@ -18,7 +18,7 @@ public class RoundEndHandlerTests
 
         // Assert
         Assert.IsType<RoundEndEvent>(result);
-        var roundEndAction = (RoundEndEvent)result;
-        Assert.True(roundEndAction.RoundEnd == expectedRoundEndTime);
+        var roundEndEvent = (RoundEndEvent)result;
+        Assert.True(roundEndEvent.RoundEnd == expectedRoundEndTime);
     }
 }

@@ -18,12 +18,12 @@ public class KillHandlerTests
 
         // Assert
         Assert.IsType<KillEvent>(result);
-        var killAction = (KillEvent)result;
-        Assert.True(killAction.Killer.Name == "ZywOo");
-        Assert.True(killAction.Killer.TeamType == TeamType.CounterTerrorist);
-        Assert.True(killAction.Victim.Name == "b1t");
-        Assert.True(killAction.Victim.TeamType == TeamType.Terrorist);
-        Assert.True(killAction.WeaponUsed.Name == "usp_silencer");
-        Assert.True(Math.Abs(killAction.KillDistance.DistanceInUnits - 624.547058) < 1);
+        var killEvent = (KillEvent)result;
+        Assert.True(killEvent.Killer.Name == "ZywOo");
+        Assert.True(killEvent.Killer.TeamType == TeamType.CounterTerrorist);
+        Assert.True(killEvent.Victim.Name == "b1t");
+        Assert.True(killEvent.Victim.TeamType == TeamType.Terrorist);
+        Assert.True(killEvent.WeaponUsed.Name == "usp_silencer");
+        Assert.True(Math.Abs(killEvent.KillDistance.DistanceInUnits - 624.547058) < 1);
     }
 }

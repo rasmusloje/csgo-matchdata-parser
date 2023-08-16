@@ -20,8 +20,8 @@ public class RoundResultHandlerTests
 
         // Assert
         Assert.IsType<RoundResultEvent>(result);
-        var roundResultAction = (RoundResultEvent)result;
-        Assert.True(roundResultAction.RoundWinType == expectedRoundWinType);
+        var roundResultEvent = (RoundResultEvent)result;
+        Assert.True(roundResultEvent.RoundWinType == expectedRoundWinType);
     }
     
     public static IEnumerable<object[]> Data =>

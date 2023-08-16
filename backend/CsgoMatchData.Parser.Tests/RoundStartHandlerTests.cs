@@ -18,7 +18,7 @@ public class RoundStartHandlerTests
 
         // Assert
         Assert.IsType<RoundStartEvent>(result);
-        var roundStartAction = (RoundStartEvent)result;
-        Assert.True(roundStartAction.RoundStart == expectedRoundStartTime);
+        var roundStartEvent = (RoundStartEvent)result;
+        Assert.True(roundStartEvent.RoundStart == expectedRoundStartTime);
     }
 }
