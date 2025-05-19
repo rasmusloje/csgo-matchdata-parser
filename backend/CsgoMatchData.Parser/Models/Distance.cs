@@ -3,7 +3,7 @@
 public class Distance
 {
     private const float CsgoUnitToMetreRatio = (float)2.54;
-    
+
     public Distance(float distanceInUnits)
     {
         DistanceInUnits = distanceInUnits;

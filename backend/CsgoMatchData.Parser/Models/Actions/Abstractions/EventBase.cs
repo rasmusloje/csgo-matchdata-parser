@@ -1,4 +1,3 @@
 ﻿namespace CsgoMatchData.Parser.Models.Actions.Abstractions;
 
-public abstract class EventBase
-{ }
+public abstract class EventBase { }

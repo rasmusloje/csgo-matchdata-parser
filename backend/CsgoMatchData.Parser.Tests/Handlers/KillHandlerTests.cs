@@ -11,7 +11,8 @@ public class KillHandlerTests
     {
         // Arrange
         var killHandler = new KillHandler();
-        const string actionText = @"11/28/2021 - 20:42:05: ""ZywOo<26><STEAM_1:1:76700232><CT>"" [788 -2306 -416] killed ""b1t<32><STEAM_1:0:143170874><TERRORIST>"" [1407 -2389 -413] with ""usp_silencer"" (headshot)";
+        const string actionText =
+            @"11/28/2021 - 20:42:05: ""ZywOo<26><STEAM_1:1:76700232><CT>"" [788 -2306 -416] killed ""b1t<32><STEAM_1:0:143170874><TERRORIST>"" [1407 -2389 -413] with ""usp_silencer"" (headshot)";
 
         // Act
         var result = killHandler.Parse(actionText);

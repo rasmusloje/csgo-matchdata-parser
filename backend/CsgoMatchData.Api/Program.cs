@@ -19,10 +19,12 @@ builder.Services.AddScoped<IRoundResultService, RoundResultService>();
 builder.Services.AddScoped<IMatchResultService, MatchResultService>();
 builder.Services.AddScoped<IKillDistanceService, KillDistanceService>();
 
-builder.Services.AddControllers().AddJsonOptions(options =>
-{
-    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-});
+builder
+    .Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -41,9 +43,6 @@ app.UseHttpsRedirection();
 
 app.MapControllers();
 
-app.UseCors(x => x
-    .AllowAnyMethod()
-    .AllowAnyHeader()
-    .SetIsOriginAllowed(_ => true));
+app.UseCors(x => x.AllowAnyMethod().AllowAnyHeader().SetIsOriginAllowed(_ => true));
 
 app.Run();

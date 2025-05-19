@@ -12,31 +12,36 @@ public class MatchDataParserService
 
         var rounds = new List<Round>();
         var handlerChain = ActionHandlerSetup.SetupChain();
-        
+
         for (var i = 0; i < filteredMatchDataSegment.Count; i++)
         {
             if (filteredMatchDataSegment[i].Contains("Game Over"))
             {
                 break;
             }
-            
+
             if (filteredMatchDataSegment[i].Contains("Round_Start"))
             {
                 var roundEvents = new List<RoundEvent>();
-        
-                while (i < filteredMatchDataSegment.Count && !filteredMatchDataSegment[i - 1].Contains("Round_End"))
+
+                while (
+                    i < filteredMatchDataSegment.Count
+                    && !filteredMatchDataSegment[i - 1].Contains("Round_End")
+                )
                 {
-                    var timestamp = TimeExtractor.ParseTimestampFromActionText(filteredMatchDataSegment[i]);
-        
+                    var timestamp = TimeExtractor.ParseTimestampFromActionText(
+                        filteredMatchDataSegment[i]
+                    );
+
                     var result = handlerChain.Parse(filteredMatchDataSegment[i]);
                     if (result != null)
                     {
                         roundEvents.Add(new RoundEvent(timestamp, result));
                     }
-                    
+
                     i++;
                 }
-                
+
                 rounds.Add(new Round(roundEvents));
             }
         }
@@ -58,8 +63,12 @@ public class MatchDataParserService
         }
 
         var matchActualStartIndex = matchStartIndices.Max();
-        var filteredMatchDataSegment = new ArraySegment<string>(lines, matchActualStartIndex, lines.Length - matchActualStartIndex);
-        
+        var filteredMatchDataSegment = new ArraySegment<string>(
+            lines,
+            matchActualStartIndex,
+            lines.Length - matchActualStartIndex
+        );
+
         return filteredMatchDataSegment;
     }
 }

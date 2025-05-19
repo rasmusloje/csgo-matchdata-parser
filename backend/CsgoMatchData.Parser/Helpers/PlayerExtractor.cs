@@ -9,14 +9,14 @@ internal class PlayerExtractor
     {
         var fullPlayerInfoPattern = new Regex(@"\""(.*?)\""", RegexOptions.IgnoreCase);
         var fullPlayerInfoMatch = fullPlayerInfoPattern.Match(actionText);
-        
+
         var playerNamePattern = new Regex("[A-Za-z0-9]+", RegexOptions.IgnoreCase);
         var playerName = playerNamePattern.Match(fullPlayerInfoMatch.Value);
         var teamTypeOfPlayer = ParseTeamTypeFromPlayerString(fullPlayerInfoMatch.Value);
 
         return new Player(playerName.Value, teamTypeOfPlayer);
     }
-    
+
     private static TeamType ParseTeamTypeFromPlayerString(string playerString)
     {
         if (playerString.Contains("<CT>"))

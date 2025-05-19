@@ -11,7 +11,7 @@ public class MatchDataProvider : IMatchDataProvider
     {
         _rounds = rounds;
     }
-    
+
     public IReadOnlyCollection<Round> GetMatchRounds()
     {
         return _rounds;

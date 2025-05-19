@@ -11,7 +11,8 @@ public class DoorDestroyedHandlerTests
     {
         // Arrange
         var doorDestroyedHandler = new DoorDestroyedHandler();
-        var actionText = @"11/28/2021 - 21:19:19: ""Kyojin<34><STEAM_1:1:22851120><TERRORIST>"" [15 -843 -416] killed other ""prop_door_rotating<417>"" [257 -1310 -416] with ""hegrenade""";
+        var actionText =
+            @"11/28/2021 - 21:19:19: ""Kyojin<34><STEAM_1:1:22851120><TERRORIST>"" [15 -843 -416] killed other ""prop_door_rotating<417>"" [257 -1310 -416] with ""hegrenade""";
 
         // Act
         var result = doorDestroyedHandler.Parse(actionText);

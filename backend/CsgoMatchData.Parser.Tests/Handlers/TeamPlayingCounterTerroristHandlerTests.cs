@@ -10,7 +10,8 @@ public class TeamPlayingCounterTerroristHandlerTests
     {
         // Arrange
         var teamPlayingCounterTerroristHandler = new TeamPlayingCounterTerroristHandler();
-        const string actionText = @"11/28/2021 - 21:07:42: MatchStatus: Team playing ""CT"": TeamVitality";
+        const string actionText =
+            @"11/28/2021 - 21:07:42: MatchStatus: Team playing ""CT"": TeamVitality";
 
         // Act
         var result = teamPlayingCounterTerroristHandler.Parse(actionText);

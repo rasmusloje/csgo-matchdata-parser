@@ -12,18 +12,26 @@ public class RoundResultService : IRoundResultService
 
     public RoundResultService(IMatchDataProvider matchDataProvider)
     {
-        _matchDataProvider = matchDataProvider ?? throw new ArgumentNullException(nameof(matchDataProvider));
+        _matchDataProvider =
+            matchDataProvider ?? throw new ArgumentNullException(nameof(matchDataProvider));
     }
-    
+
     public IReadOnlyCollection<RoundResult> GetRoundResults()
     {
         var rounds = _matchDataProvider.GetMatchRounds();
 
         var roundResultEvents = rounds
-            .Select(round => round.Events
-                .OrderBy(roundEvent => roundEvent.Timestamp)
-                .Select(roundEvent => roundEvent.EventBase)
-                .Where(roundEvent => roundEvent is RoundResultEvent or TeamPlayingCounterTerroristEvent or TeamPlayingTerroristEvent))
+            .Select(round =>
+                round
+                    .Events.OrderBy(roundEvent => roundEvent.Timestamp)
+                    .Select(roundEvent => roundEvent.EventBase)
+                    .Where(roundEvent =>
+                        roundEvent
+                            is RoundResultEvent
+                                or TeamPlayingCounterTerroristEvent
+                                or TeamPlayingTerroristEvent
+                    )
+            )
             .ToList();
 
         var roundResults = new List<RoundResult>();
@@ -33,7 +41,7 @@ public class RoundResultService : IRoundResultService
             var winType = RoundWinType.TerroristsWin;
             var teamPlayingCt = string.Empty;
             var teamPlayingT = string.Empty;
-            
+
             foreach (var roundEvent in roundResultEvents[i])
             {
                 switch (roundEvent)
@@ -49,10 +57,10 @@ public class RoundResultService : IRoundResultService
                         break;
                 }
             }
-            
+
             roundResults.Add(new RoundResult(roundNumber, teamPlayingCt, teamPlayingT, winType));
         }
-        
+
         return roundResults;
     }
 }

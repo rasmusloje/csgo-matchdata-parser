@@ -14,7 +14,7 @@ internal class ActionHandlerSetup
         var teamPlayingCtHandler = new TeamPlayingCounterTerroristHandler();
         var teamPlayingTerroristHandler = new TeamPlayingTerroristHandler();
         var doorDestroyedHandler = new DoorDestroyedHandler();
-        
+
         roundStartHandler
             .SetNext(killActionHandler)
             .SetNext(roundEndHandler)

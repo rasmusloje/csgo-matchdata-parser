@@ -12,8 +12,9 @@ public class MatchController : ControllerBase
     private readonly IMatchResultService _matchResultService;
 
     public MatchController(
-        IMatchTeamsService matchTeamsService, 
-        IMatchResultService matchResultService)
+        IMatchTeamsService matchTeamsService,
+        IMatchResultService matchResultService
+    )
     {
         _matchTeamsService = matchTeamsService;
         _matchResultService = matchResultService;
@@ -27,7 +28,7 @@ public class MatchController : ControllerBase
 
         return new TeamResponse(teams.TeamOne, teams.TeamTwo);
     }
-    
+
     [HttpGet]
     [Route("results")]
     public MatchStatisticResponse GetMatchResult()

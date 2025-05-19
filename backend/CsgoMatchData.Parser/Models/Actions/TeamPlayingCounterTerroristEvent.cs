@@ -4,6 +4,6 @@ namespace CsgoMatchData.Parser.Models.Actions;
 
 public class TeamPlayingCounterTerroristEvent : TeamPlayingSideBase
 {
-    public TeamPlayingCounterTerroristEvent(string teamName) : base(teamName)
-    { }
+    public TeamPlayingCounterTerroristEvent(string teamName)
+        : base(teamName) { }
 }

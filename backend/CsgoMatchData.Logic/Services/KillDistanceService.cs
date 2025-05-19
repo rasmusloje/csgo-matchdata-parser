@@ -11,13 +11,18 @@ public class KillDistanceService : IKillDistanceService
 
     public KillDistanceService(IMatchDataProvider matchDataProvider)
     {
-        _matchDataProvider = matchDataProvider ?? throw new ArgumentNullException(nameof(matchDataProvider));
+        _matchDataProvider =
+            matchDataProvider ?? throw new ArgumentNullException(nameof(matchDataProvider));
     }
-    
-    public (Distance ShortestDistance, Distance AvgDistance, Distance LongestDistance) GetKillDistanceStatistics()
+
+    public (
+        Distance ShortestDistance,
+        Distance AvgDistance,
+        Distance LongestDistance
+    ) GetKillDistanceStatistics()
     {
         var rounds = _matchDataProvider.GetMatchRounds();
-        
+
         var killEvents = rounds
             .SelectMany(round => round.Events)
             .Where(roundEvent => roundEvent.EventBase is KillEvent)
@@ -25,13 +30,20 @@ public class KillDistanceService : IKillDistanceService
             .Cast<KillEvent>()
             .ToList();
 
-        var shortestDistanceKill = killEvents.Min(killEvent => killEvent.KillDistance.DistanceInUnits);
-        var averageDistanceKill = killEvents.Average(killEvent => killEvent.KillDistance.DistanceInUnits);
-        var longestDistanceKill = killEvents.Max(killEvent => killEvent.KillDistance.DistanceInUnits);
+        var shortestDistanceKill = killEvents.Min(killEvent =>
+            killEvent.KillDistance.DistanceInUnits
+        );
+        var averageDistanceKill = killEvents.Average(killEvent =>
+            killEvent.KillDistance.DistanceInUnits
+        );
+        var longestDistanceKill = killEvents.Max(killEvent =>
+            killEvent.KillDistance.DistanceInUnits
+        );
 
         return (
-            new Distance(shortestDistanceKill), 
+            new Distance(shortestDistanceKill),
             new Distance(averageDistanceKill),
-            new Distance(longestDistanceKill));
+            new Distance(longestDistanceKill)
+        );
     }
 }

@@ -11,13 +11,14 @@ public class KillDeathCountService : IKillDeathCountService
 
     public KillDeathCountService(IMatchDataProvider matchDataProvider)
     {
-        _matchDataProvider = matchDataProvider ?? throw new ArgumentNullException(nameof(matchDataProvider));
+        _matchDataProvider =
+            matchDataProvider ?? throw new ArgumentNullException(nameof(matchDataProvider));
     }
-    
+
     public IReadOnlyCollection<PlayerKillDeathCount> GetPlayerKillDeathCounts()
     {
         var rounds = _matchDataProvider.GetMatchRounds();
-        
+
         var killEvents = rounds
             .SelectMany(round => round.Events)
             .Where(roundEvent => roundEvent.EventBase is KillEvent)
@@ -25,24 +26,26 @@ public class KillDeathCountService : IKillDeathCountService
             .Cast<KillEvent>();
 
         var killDeathCounts = new Dictionary<string, KillDeathCounter>();
-        
+
         foreach (var killEvent in killEvents)
         {
             IncrementKills(killDeathCounts, killEvent);
             IncrementDeaths(killDeathCounts, killEvent);
         }
 
-        var mappedKillCountResult = killDeathCounts
-            .Select(killCount => 
-                new PlayerKillDeathCount(
-                    killCount.Key, 
-                    killCount.Value.KillCounter,
-                    killCount.Value.DeathCounter));
+        var mappedKillCountResult = killDeathCounts.Select(killCount => new PlayerKillDeathCount(
+            killCount.Key,
+            killCount.Value.KillCounter,
+            killCount.Value.DeathCounter
+        ));
 
         return mappedKillCountResult.ToList();
     }
 
-    private static void IncrementKills(IDictionary<string, KillDeathCounter> killDeathCounts, KillEvent killEvent)
+    private static void IncrementKills(
+        IDictionary<string, KillDeathCounter> killDeathCounts,
+        KillEvent killEvent
+    )
     {
         if (!killDeathCounts.ContainsKey(killEvent.Killer.Name))
         {
@@ -53,8 +56,11 @@ public class KillDeathCountService : IKillDeathCountService
             killDeathCounts[killEvent.Killer.Name].KillCounter++;
         }
     }
-    
-    private static void IncrementDeaths(IDictionary<string, KillDeathCounter> killDeathCounts, KillEvent killEvent)
+
+    private static void IncrementDeaths(
+        IDictionary<string, KillDeathCounter> killDeathCounts,
+        KillEvent killEvent
+    )
     {
         if (!killDeathCounts.ContainsKey(killEvent.Victim.Name))
         {

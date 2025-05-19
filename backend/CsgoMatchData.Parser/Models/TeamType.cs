@@ -3,5 +3,5 @@
 public enum TeamType
 {
     Terrorist,
-    CounterTerrorist
+    CounterTerrorist,
 }

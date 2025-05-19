@@ -5,5 +5,5 @@ public enum RoundWinType
     TerroristsWin,
     CounterTerroristsWin,
     TerroristsWinByBombExplosion,
-    CounterTerroristsWinByDefusingBomb
+    CounterTerroristsWinByDefusingBomb,
 }

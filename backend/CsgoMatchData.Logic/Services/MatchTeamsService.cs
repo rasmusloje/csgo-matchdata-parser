@@ -12,17 +12,20 @@ public class MatchTeamsService : IMatchTeamsService
 
     public MatchTeamsService(IMatchDataProvider matchDataProvider)
     {
-        _matchDataProvider = matchDataProvider ?? throw new ArgumentNullException(nameof(matchDataProvider));
+        _matchDataProvider =
+            matchDataProvider ?? throw new ArgumentNullException(nameof(matchDataProvider));
     }
-    
+
     public (Team TeamOne, Team TeamTwo) GetMatchTeamsWithPlayers()
     {
         var rounds = _matchDataProvider.GetMatchRounds().ToList();
 
         var killEvents = rounds
-            .SelectMany(round => round.Events.Select(roundEvent => roundEvent.EventBase).OfType<KillEvent>())
+            .SelectMany(round =>
+                round.Events.Select(roundEvent => roundEvent.EventBase).OfType<KillEvent>()
+            )
             .ToList();
-        
+
         var firstRoundEvents = rounds[0].Events.Select(roundEvent => roundEvent.EventBase).ToList();
         var teamOneEvent = firstRoundEvents.OfType<TeamPlayingCounterTerroristEvent>().Single();
         var teamTwoEvent = firstRoundEvents.OfType<TeamPlayingTerroristEvent>().Single();
@@ -30,7 +33,7 @@ public class MatchTeamsService : IMatchTeamsService
         var teamOnePlayers = new HashSet<string>();
         var teamTwoPlayers = new HashSet<string>();
         var loopCounter = 0;
-        
+
         while (teamOnePlayers.Count != 5 || teamTwoPlayers.Count != 5)
         {
             var killer = killEvents[loopCounter].Killer;
@@ -38,7 +41,7 @@ public class MatchTeamsService : IMatchTeamsService
 
             AddPlayerToTeam(killer, teamOnePlayers, teamTwoPlayers);
             AddPlayerToTeam(victim, teamOnePlayers, teamTwoPlayers);
-            
+
             loopCounter++;
         }
 
@@ -48,7 +51,11 @@ public class MatchTeamsService : IMatchTeamsService
         return (teamOne, teamTwo);
     }
 
-    private static void AddPlayerToTeam(Player killer, ISet<string> teamOnePlayers, ISet<string> teamTwoPlayers)
+    private static void AddPlayerToTeam(
+        Player killer,
+        ISet<string> teamOnePlayers,
+        ISet<string> teamTwoPlayers
+    )
     {
         if (killer.TeamType == TeamType.CounterTerrorist)
         {

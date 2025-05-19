@@ -2,4 +2,8 @@
 
 namespace CsgoMatchData.Api.Responses;
 
-public record KillDistanceResponse(Distance ShortestKillDistance, Distance AverageKillDistance, Distance LongestKillDistance);
+public record KillDistanceResponse(
+    Distance ShortestKillDistance,
+    Distance AverageKillDistance,
+    Distance LongestKillDistance
+);

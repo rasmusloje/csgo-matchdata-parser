@@ -2,4 +2,6 @@
 
 namespace CsgoMatchData.Api.Responses;
 
-public record PlayerKillDeathResponse(IReadOnlyCollection<PlayerKillDeathCount> PlayerKillDeathCounts);
+public record PlayerKillDeathResponse(
+    IReadOnlyCollection<PlayerKillDeathCount> PlayerKillDeathCounts
+);

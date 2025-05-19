@@ -8,6 +8,6 @@ public class RoundEndEvent : EventBase
     {
         RoundEnd = roundEnd;
     }
-    
+
     public DateTime RoundEnd { get; }
 }

@@ -10,9 +10,10 @@ public class MatchResultService : IMatchResultService
 
     public MatchResultService(IRoundResultService roundResultService)
     {
-        _roundResultService = roundResultService ?? throw new ArgumentNullException(nameof(roundResultService));
+        _roundResultService =
+            roundResultService ?? throw new ArgumentNullException(nameof(roundResultService));
     }
-    
+
     public MatchResult GetMatchResult()
     {
         var roundResults = _roundResultService.GetRoundResults();
@@ -29,18 +30,32 @@ public class MatchResultService : IMatchResultService
 
         return new MatchResult(teamScoreList, roundResults);
     }
-    
-    private static void IncrementCounterTerroristScore(RoundResult roundResult, IDictionary<string, int> teamScores)
+
+    private static void IncrementCounterTerroristScore(
+        RoundResult roundResult,
+        IDictionary<string, int> teamScores
+    )
     {
-        if (roundResult.RoundWinType is RoundWinType.CounterTerroristsWin or RoundWinType.CounterTerroristsWinByDefusingBomb)
+        if (
+            roundResult.RoundWinType
+            is RoundWinType.CounterTerroristsWin
+                or RoundWinType.CounterTerroristsWinByDefusingBomb
+        )
         {
             AddTeamScore(roundResult.TeamPlayingCounterTerrorist, teamScores);
         }
     }
 
-    private static void IncrementTerroristScore(RoundResult roundResult, IDictionary<string, int> teamScores)
+    private static void IncrementTerroristScore(
+        RoundResult roundResult,
+        IDictionary<string, int> teamScores
+    )
     {
-        if (roundResult.RoundWinType is RoundWinType.TerroristsWin or RoundWinType.TerroristsWinByBombExplosion)
+        if (
+            roundResult.RoundWinType
+            is RoundWinType.TerroristsWin
+                or RoundWinType.TerroristsWinByBombExplosion
+        )
         {
             AddTeamScore(roundResult.TeamPlayingTerrorist, teamScores);
         }

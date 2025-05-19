@@ -12,13 +12,15 @@ public class MatchStatisticsController : ControllerBase
     private readonly IKillDistanceService _killDistanceService;
     private readonly IKillDeathCountService _killDeathCountService;
 
-    public MatchStatisticsController(IKillDistanceService killDistanceService, IKillDeathCountService killDeathCountService)
+    public MatchStatisticsController(
+        IKillDistanceService killDistanceService,
+        IKillDeathCountService killDeathCountService
+    )
     {
         _killDistanceService = killDistanceService;
         _killDeathCountService = killDeathCountService;
     }
-   
-    
+
     [HttpGet]
     [Route("kill-distances")]
     public KillDistanceResponse GetKillDistances()
@@ -26,11 +28,12 @@ public class MatchStatisticsController : ControllerBase
         var killDistanceStatistics = _killDistanceService.GetKillDistanceStatistics();
 
         return new KillDistanceResponse(
-            killDistanceStatistics.ShortestDistance, 
-            killDistanceStatistics.AvgDistance, 
-            killDistanceStatistics.LongestDistance);
+            killDistanceStatistics.ShortestDistance,
+            killDistanceStatistics.AvgDistance,
+            killDistanceStatistics.LongestDistance
+        );
     }
-    
+
     [HttpGet]
     [Route("kill-death")]
     public PlayerKillDeathResponse Get()
