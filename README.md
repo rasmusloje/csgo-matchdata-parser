@@ -1,6 +1,7 @@
 # CS:GO Match Data Parser & Visualization
 
-Extracts data from a srdc log of a professional CS:GO match and exposes certain parsed data via endpoints in an ASP.NET 7 API which is visualized through a React/TypeScript frontend application.
+Extracts data from a srdc log of a professional CS:GO match and exposes certain parsed data via endpoints from a .NET 7 API which is visualized through a React/TypeScript frontend application.
+
 Match file is read and parsed into sensible data upon API startup.
 
 ![Frontend Screenshot](blob/frontend-screenshot.png)
@@ -8,7 +9,7 @@ Match file is read and parsed into sensible data upon API startup.
 ## Prerequisites
 Following is required to run the applications.
 - [NodeJS TLS](https://nodejs.org/en)
-- [.NET 7 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
+- [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
 
 ## Run the applications
 First off, run the backend to serve the API. Then start the frontend project.
@@ -24,4 +25,4 @@ First off, run the backend to serve the API. Then start the frontend project.
 - CD into the folder: `frontend`
 - Run `npm install`
 - Run `npm start`
-- App will be served at: http://localhost:3000 
+- App will be served at: http://localhost:3000
