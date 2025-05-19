@@ -1,46 +1,22 @@
-import { useEffect, useState } from "react";
-import { apiGet } from "../api";
+import { useKillDistanceStats } from "../hooks/useKillDistanceStats"
 
-interface DistanceStatistic {
-  distanceInUnits: number;
-  distanceInMetres: number;
-}
-
-interface KillDistanceStatistics {
-  shortestKillDistance: DistanceStatistic;
-  averageKillDistance: DistanceStatistic;
-  longestKillDistance: DistanceStatistic;
-}
-
-const KillDistanceStatistics = () => {
-  const [killDistanceStatistics, setKillDistanceStatistics] =
-    useState<KillDistanceStatistics>();
-  const [loadingKillDistanceStatistics, setLoadingKillDistanceStatistics] =
-    useState<boolean>(true);
-
-  useEffect(() => {
-    apiGet<KillDistanceStatistics>("MatchStatistics/KillDistances").then(
-      (response) => {
-        setKillDistanceStatistics(response.data);
-        setLoadingKillDistanceStatistics(false);
-      }
-    );
-  }, []);
+export const KillDistanceStatistics = () => {
+  const { data: killDistanceStatistics, isLoading } = useKillDistanceStats()
 
   return (
     <>
-      {!loadingKillDistanceStatistics && (
+      {!isLoading && killDistanceStatistics && (
         <div className="section">
           <div className="row">
             <div className="col-4">
               <h3>Shortest distance kill</h3>
               <p>
                 {Math.round(
-                  killDistanceStatistics!.shortestKillDistance.distanceInMetres
+                  killDistanceStatistics.shortestKillDistance.distanceInMetres
                 )}{" "}
                 metres (
                 {Math.round(
-                  killDistanceStatistics!.shortestKillDistance.distanceInUnits
+                  killDistanceStatistics.shortestKillDistance.distanceInUnits
                 )}{" "}
                 units)
               </p>
@@ -49,11 +25,11 @@ const KillDistanceStatistics = () => {
               <h3>Average distance kill</h3>
               <p>
                 {Math.round(
-                  killDistanceStatistics!.averageKillDistance.distanceInMetres
+                  killDistanceStatistics.averageKillDistance.distanceInMetres
                 )}{" "}
                 metres (
                 {Math.round(
-                  killDistanceStatistics!.averageKillDistance.distanceInUnits
+                  killDistanceStatistics.averageKillDistance.distanceInUnits
                 )}{" "}
                 units)
               </p>
@@ -62,11 +38,11 @@ const KillDistanceStatistics = () => {
               <h3>Longest distance kill</h3>
               <p>
                 {Math.round(
-                  killDistanceStatistics!.longestKillDistance.distanceInMetres
+                  killDistanceStatistics.longestKillDistance.distanceInMetres
                 )}{" "}
                 metres (
                 {Math.round(
-                  killDistanceStatistics!.longestKillDistance.distanceInUnits
+                  killDistanceStatistics.longestKillDistance.distanceInUnits
                 )}{" "}
                 units)
               </p>
@@ -75,7 +51,5 @@ const KillDistanceStatistics = () => {
         </div>
       )}
     </>
-  );
-};
-
-export default KillDistanceStatistics;
+  )
+}

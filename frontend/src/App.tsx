@@ -1,35 +1,19 @@
-import "./App.css";
-import MatchResultHeader from "./components/MatchResultHeader";
-import RoundResultsTable from "./components/RoundResultsTable";
-import TeamTables from "./components/TeamTables";
-import KillDistanceStatistics from "./components/KillDistanceStatistics";
-import { useState, useEffect } from "react";
-import { Teams, MatchResult, MatchResultResponse, TeamScores } from "./types";
-import { apiGet } from "./api";
+import "./App.css"
+import { KillDistanceStatistics } from "./components/KillDistanceStatistics"
+import { MatchResultHeader } from "./components/MatchResultHeader"
+import { RoundResultsTable } from "./components/RoundResultsTable"
+import { TeamTables } from "./components/TeamTables"
+import { useMatchResults } from "./hooks/useMatchResults"
+import { useMatchTeams } from "./hooks/useMatchTeams"
+import { TeamScores } from "./types"
 
 function App() {
-  const [teams, setTeams] = useState<Teams>();
-  const [loadingTeams, setLoadingTeams] = useState<boolean>(true);
-
-  const [matchResult, setMatchResult] = useState<MatchResult>();
-  const [loadingMatchResult, setLoadingMatchResult] = useState<boolean>(true);
-
-  useEffect(() => {
-    apiGet<MatchResultResponse>("MatchStatistics/Result").then((response) => {
-      setMatchResult(response.data.matchResult);
-      setLoadingMatchResult(false);
-    });
-
-    apiGet<Teams>("Match/Teams").then((response) => {
-      setTeams(response.data);
-      setLoadingTeams(false);
-    });
-  }, []);
+  const { data: teams, isLoading: loadingTeams } = useMatchTeams()
+  const { data: matchResult, isLoading: loadingMatchResult } = useMatchResults()
 
   function getTeamScore(teamName: string, teamScores: TeamScores[]): number {
-    let team = teamScores.find((t) => t.teamName == teamName);
-
-    return team!.score;
+    const team = teamScores.find((t) => t.teamName === teamName)
+    return team?.score ?? 0
   }
 
   return (
@@ -72,7 +56,7 @@ function App() {
         </main>
       </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

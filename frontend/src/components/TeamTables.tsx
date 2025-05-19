@@ -1,62 +1,39 @@
-import { useEffect, useState } from "react";
-import PlayerStatTable from "./PlayerStatisticsTable";
-import { apiGet } from "../api";
+import { usePlayerKillDeathStats } from "../hooks/usePlayerKillDeathStats"
+import { PlayerStatisticsTable } from "./PlayerStatisticsTable"
 
 interface TeamTablesProps {
-  teamOne: string;
-  teamTwo: string;
-  teamOnePlayers: string[];
-  teamTwoPlayers: string[];
+  teamOne: string
+  teamTwo: string
+  teamOnePlayers: string[]
+  teamTwoPlayers: string[]
 }
 
-export interface PlayerKillDeath {
-  playerName: string;
-  amountOfKills: number;
-  amountOfDeaths: number;
-}
-
-interface PlayerKillDeathResponse {
-  playerKillDeathCounts: PlayerKillDeath[];
-}
-
-const TeamTables = ({
+export const TeamTables = ({
   teamOne,
   teamTwo,
   teamOnePlayers,
   teamTwoPlayers,
 }: TeamTablesProps) => {
-  const [teamOnePlayerKillDeaths, setTeamOnePlayerKillDeaths] =
-    useState<PlayerKillDeath[]>();
-  const [teamTwoPlayerKillDeaths, setTeamTwoPlayerKillDeaths] =
-    useState<PlayerKillDeath[]>();
-  const [loadingPlayerKillDeaths, setLoadingPlayerKillDeaths] =
-    useState<boolean>(true);
+  const { data: allPlayerStats, isLoading } = usePlayerKillDeathStats()
 
-  useEffect(() => {
-    apiGet<PlayerKillDeathResponse>("PlayerStatistics/KillDeath").then((response) => {
-      const filteredTeamOnePlayers = response.data!.playerKillDeathCounts.filter((player) =>
-        teamOnePlayers.includes(player.playerName)
-      );
-      const filteredTeamTwoPlayers = response.data!.playerKillDeathCounts.filter((player) =>
-        teamTwoPlayers.includes(player.playerName)
-      );
-      setTeamOnePlayerKillDeaths(filteredTeamOnePlayers);
-      setTeamTwoPlayerKillDeaths(filteredTeamTwoPlayers);
+  const teamOnePlayerKillDeaths = allPlayerStats?.filter((player) =>
+    teamOnePlayers.includes(player.playerName)
+  )
 
-      setLoadingPlayerKillDeaths(false);
-    });
-  }, []);
+  const teamTwoPlayerKillDeaths = allPlayerStats?.filter((player) =>
+    teamTwoPlayers.includes(player.playerName)
+  )
 
   return (
     <>
-      {!loadingPlayerKillDeaths && (
+      {!isLoading && (
         <div className="section">
           <div className="row">
-            <PlayerStatTable
+            <PlayerStatisticsTable
               teamName={teamOne}
               players={teamOnePlayerKillDeaths!}
             />
-            <PlayerStatTable
+            <PlayerStatisticsTable
               teamName={teamTwo}
               players={teamTwoPlayerKillDeaths!}
             />
@@ -64,7 +41,5 @@ const TeamTables = ({
         </div>
       )}
     </>
-  );
-};
-
-export default TeamTables;
+  )
+}

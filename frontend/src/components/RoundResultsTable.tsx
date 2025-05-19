@@ -1,22 +1,22 @@
-import { Fragment } from "react";
-import { RoundResult } from "../types";
+import { Fragment } from "react"
+import { RoundResult } from "../types"
 
 interface RoundResultsTableProps {
-  rounds: RoundResult[];
+  rounds: RoundResult[]
 }
 
 function getImageName(winType: string): string {
-  if (winType == "TerroristsWin") {
-    return "/img/t_win.svg";
-  } else if (winType == "TerroristsWinByBombExplosion") {
-    return "/img/bomb_exploded.svg";
-  } else if (winType == "CounterTerroristsWin") {
-    return "/img/ct_win.svg";
-  } else if (winType == "CounterTerroristsWinByDefusingBomb") {
-    return "/img/bomb_defused.svg";
+  if (winType === "TerroristsWin") {
+    return "/img/t_win.svg"
+  } else if (winType === "TerroristsWinByBombExplosion") {
+    return "/img/bomb_exploded.svg"
+  } else if (winType === "CounterTerroristsWin") {
+    return "/img/ct_win.svg"
+  } else if (winType === "CounterTerroristsWinByDefusingBomb") {
+    return "/img/bomb_defused.svg"
   }
 
-  return "";
+  return ""
 }
 
 function getTeamWhoWonTheRound(
@@ -24,17 +24,17 @@ function getTeamWhoWonTheRound(
   teamCt: string,
   teamT: string
 ): string {
-  if (winType == "TerroristsWin") {
-    return teamT + " won the round by time or eliminating opponents";
-  } else if (winType == "TerroristsWinByBombExplosion") {
-    return teamT + " won the round by bomb explosion";
-  } else if (winType == "CounterTerroristsWin") {
-    return teamCt + " won the round by time or eliminating opponents";
-  } else if (winType == "CounterTerroristsWinByDefusingBomb") {
-    return teamCt + " won the round by defusing the bomb";
+  if (winType === "TerroristsWin") {
+    return teamT + " won the round by time or eliminating opponents"
+  } else if (winType === "TerroristsWinByBombExplosion") {
+    return teamT + " won the round by bomb explosion"
+  } else if (winType === "CounterTerroristsWin") {
+    return teamCt + " won the round by time or eliminating opponents"
+  } else if (winType === "CounterTerroristsWinByDefusingBomb") {
+    return teamCt + " won the round by defusing the bomb"
   }
 
-  return "";
+  return ""
 }
 
 function renderTeamImage(round: RoundResult) {
@@ -47,56 +47,54 @@ function renderTeamImage(round: RoundResult) {
         round.teamPlayingCounterTerrorist,
         round.teamPlayingTerrorist
       )}
+      alt="Round outcome"
     />
-  );
+  )
 }
 
-const RoundResultsTable = ({ rounds }: RoundResultsTableProps) => {
+export const RoundResultsTable = ({ rounds }: RoundResultsTableProps) => {
   return (
-    <>
-      <div className="section">
-        <h2>Round Results</h2>
-        <div className="table-responsive">
-          <table className="table table-borderless">
-            <thead>
-              <tr>
-                {rounds.map((round, i) =>
-                  i == 15 ? (
-                    <Fragment key={i}>
-                      <td key={1000}>-</td>
-                      <td key={i}>{round.roundNumber}</td>
-                    </Fragment>
-                  ) : (
+    <div className="section">
+      <h2>Round Results</h2>
+      <div className="table-responsive">
+        <table className="table table-borderless">
+          <thead>
+            <tr>
+              {rounds.map((round, i) =>
+                i === 15 ? (
+                  <Fragment key={i}>
+                    <td key={1000}>-</td>
                     <td key={i}>{round.roundNumber}</td>
-                  )
-                )}
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                {rounds.map((round, i) =>
-                  i == 15 ? (
-                    <Fragment key={i}>
-                      <td key={1000}>
-                        <img
-                          src="img/people-arrows-solid.svg"
-                          className="round-outcome"
-                          title="Halftime - Switching sides"
-                        />
-                      </td>
-                      <td key={i}>{renderTeamImage(round)}</td>
-                    </Fragment>
-                  ) : (
+                  </Fragment>
+                ) : (
+                  <td key={i}>{round.roundNumber}</td>
+                )
+              )}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              {rounds.map((round, i) =>
+                i === 15 ? (
+                  <Fragment key={i}>
+                    <td key={1000}>
+                      <img
+                        src="img/people-arrows-solid.svg"
+                        className="round-outcome"
+                        title="Halftime - Switching sides"
+                        alt="Halftime"
+                      />
+                    </td>
                     <td key={i}>{renderTeamImage(round)}</td>
-                  )
-                )}
-              </tr>
-            </tbody>
-          </table>
-        </div>
+                  </Fragment>
+                ) : (
+                  <td key={i}>{renderTeamImage(round)}</td>
+                )
+              )}
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </>
-  );
-};
-
-export default RoundResultsTable;
+    </div>
+  )
+}

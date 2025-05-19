@@ -5,32 +5,22 @@ using Microsoft.AspNetCore.Mvc;
 namespace CsgoMatchData.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/match/statistics")]
 [Produces("application/json")]
 public class MatchStatisticsController : ControllerBase
 {
-    private readonly IMatchResultService _matchResultService;
     private readonly IKillDistanceService _killDistanceService;
+    private readonly IKillDeathCountService _killDeathCountService;
 
-    public MatchStatisticsController(
-        IMatchResultService matchResultService,
-        IKillDistanceService killDistanceService)
+    public MatchStatisticsController(IKillDistanceService killDistanceService, IKillDeathCountService killDeathCountService)
     {
-        _matchResultService = matchResultService ?? throw new ArgumentNullException(nameof(matchResultService));
-        _killDistanceService = killDistanceService ?? throw new ArgumentNullException(nameof(killDistanceService));
+        _killDistanceService = killDistanceService;
+        _killDeathCountService = killDeathCountService;
     }
-
-    [HttpGet]
-    [Route("Result")]
-    public MatchStatisticResponse GetMatchResult()
-    {
-        var matchResult = _matchResultService.GetMatchResult();
-
-        return new MatchStatisticResponse(matchResult);
-    }
+   
     
     [HttpGet]
-    [Route("KillDistances")]
+    [Route("kill-distances")]
     public KillDistanceResponse GetKillDistances()
     {
         var killDistanceStatistics = _killDistanceService.GetKillDistanceStatistics();
@@ -39,5 +29,14 @@ public class MatchStatisticsController : ControllerBase
             killDistanceStatistics.ShortestDistance, 
             killDistanceStatistics.AvgDistance, 
             killDistanceStatistics.LongestDistance);
+    }
+    
+    [HttpGet]
+    [Route("kill-death")]
+    public PlayerKillDeathResponse Get()
+    {
+        var playerKillDeathCounts = _killDeathCountService.GetPlayerKillDeathCounts();
+
+        return new PlayerKillDeathResponse(playerKillDeathCounts);
     }
 }

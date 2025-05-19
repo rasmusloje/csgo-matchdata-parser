@@ -5,24 +5,35 @@ using Microsoft.AspNetCore.Mvc;
 namespace CsgoMatchData.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
-[Produces("application/json")]
+[Route("api/match")]
 public class MatchController : ControllerBase
 {
     private readonly IMatchTeamsService _matchTeamsService;
+    private readonly IMatchResultService _matchResultService;
 
     public MatchController(
-        IMatchTeamsService matchTeamsService)
+        IMatchTeamsService matchTeamsService, 
+        IMatchResultService matchResultService)
     {
-        _matchTeamsService = matchTeamsService ?? throw new ArgumentNullException(nameof(matchTeamsService));
+        _matchTeamsService = matchTeamsService;
+        _matchResultService = matchResultService;
     }
 
     [HttpGet]
-    [Route("Teams")]
+    [Route("teams")]
     public TeamResponse Get()
     {
         var teams = _matchTeamsService.GetMatchTeamsWithPlayers();
 
         return new TeamResponse(teams.TeamOne, teams.TeamTwo);
+    }
+    
+    [HttpGet]
+    [Route("results")]
+    public MatchStatisticResponse GetMatchResult()
+    {
+        var matchResult = _matchResultService.GetMatchResult();
+
+        return new MatchStatisticResponse(matchResult);
     }
 }
